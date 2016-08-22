@@ -195,10 +195,9 @@ custom_studentpapercheck | Determines whether the submission is checked against 
 custom_journalcheck | Determines whether the submission is checked against journal matches
 custom_institutioncheck | Determines whether the submission is checked against institution matches
 
-## Callbacks
 
-### Outcomes
-> Example Outcomes Callback
+## Outcome Callback
+> Example Outcomes Callback Response
 
 ```json
 {
@@ -207,12 +206,40 @@ custom_institutioncheck | Determines whether the submission is checked against i
     "outcomes_tool_placement_url": "https://api.turnitin.com/api/lti/1p0/outcome_tool_data/4321"
 }
 ```
-For extra details on the LTI resource (the Turnitin Assignment) we have a parameter called `ext_resource_tool_placement_url`.
 
-`ext_resource_tool_placement_url` accepts an endpoint, which we use to send a small snippet of JSON to the server.
+For a learner an optional parameter can be passed (ext_outcomes_tool_placement_url) which will create a callback request on submission of a paper to Turnitin.  The callback contains the following JSON:
 
-### Resource
-> Example Resource Callback
+* The LTI consumer provided lis_result_sourcedid
+* The Turnitin internal paper ID
+* The outcomes_tool_placement_url, a link which returns a JSON of the submission details (e.g. due date, resource title)
+
+## Outcome Grade Callback
+> Example Outcomes Grade Callback Response
+
+```xml
+<replaceResultRequest>
+ <resultRecord>
+    <sourcedGUID>
+      <sourcedId>{LMS_paper_id}</sourcedId>
+    </sourcedGUID>
+    <result>
+      <resultScore>
+        <language>en</language>
+        <textString>{score}</textString>
+      </resultScore>
+    </result>
+  </resultRecord>
+</replaceResultRequest>
+```
+
+On submission of a paper if the ext_outcomes_tool_placement_url was sent then when a grade is updated in the Turnitin Evaluation Viewer a callback will be sent back to that URL.  The callback contains the following XML:
+
+* The lis_result_sourcedid for the paper
+* The grade of the paper
+
+
+## Resource Callback
+> Example Resource Callback Response
 
 ```json
 {
@@ -222,8 +249,10 @@ For extra details on the LTI resource (the Turnitin Assignment) we have a parame
 }
 ```
 
-For extra details on the LTI resource (the Turnitin Assignment) we have a parameter called `ext_resource_tool_placement_url`.
+On launching to create a new assignment an optional parameter (ext_resource_tool_placement_url) can be passed which will create a callback delivered on creation of a resource.  The callback contains the following JSON: 
 
-`ext_resource_tool_placement_url` accepts an endpoint, which we use to send a small snippet of JSON to the server.
+* The LTI consumer provided resource_link_id
+* The Turnitin internal assignment ID
+* The resource_tool_placement_url, a link which returns a JSON of the resource details (e.g. paper grade, similarity score).
 
 ## Server-to-Server Submission
