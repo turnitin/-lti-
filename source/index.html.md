@@ -207,7 +207,7 @@ custom_institutioncheck | Determines whether the submission is checked against i
 }
 ```
 
-For a learner an optional parameter can be passed `ext_outcomes_tool_placement_url` which will create a callback request on submission of a paper to Turnitin.  The callback contains the following information:
+For a learner an optional POST parameter can be passed `ext_outcomes_tool_placement_url` which will create a callback request after the submission of their paper to a Turnitin assignment.  The callback contains the following information:
 
 * The LTI consumer provided `lis_result_sourcedid`
 * The Turnitin internal paper ID
@@ -232,9 +232,9 @@ For a learner an optional parameter can be passed `ext_outcomes_tool_placement_u
 </replaceResultRequest>
 ```
 
-When a paper is submitted if the `lis_outcome_service_url` and `lis_result_sourcedid` was given then this URL will be stored with the paper.  When an instructor then changes the papers grade in the Evaluation Viewer a callback will be sent back to that URL.  The callback contains the following information:
+When a paper is submitted if the POST params `lis_outcome_service_url` and `lis_result_sourcedid` were given then this URL will be stored with the paper.  When an instructor then changes the papers grade in the Evaluation Viewer a callback will be sent back to that URL.  The callback contains the following information:
 
-* The lis_result_sourcedid for the paper
+* The `lis_result_sourcedid` for the paper
 * The grade set for the paper
 
 
@@ -245,11 +245,11 @@ When a paper is submitted if the `lis_outcome_service_url` and `lis_result_sourc
 {
     "resource_link_id": 12345,
     "assignmentid": 4321,
-    "resource_tool_placement_url": "https://api.turnitin.com/api/lti/1p0/resource_tool_data/4321"
+     "resource_tool_placement_url": "https://api.turnitin.com/api/lti/1p0/resource_tool_data/4321"
 }
 ```
 
-On launching to create a new assignment an optional parameter `ext_resource_tool_placement_url` can be passed which will create a callback delivered on creation of a resource.  The callback contains the following information: 
+On launching to create a new assignment an optional POST parameter can be passed `ext_resource_tool_placement_url` can be passed which will create a callback delivered on creation of a resource.  The callback contains the following information: 
 
 * The LTI consumer provided `resource_link_id`
 * The Turnitin internal assignment ID
