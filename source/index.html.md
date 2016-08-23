@@ -207,11 +207,11 @@ custom_institutioncheck | Determines whether the submission is checked against i
 }
 ```
 
-For a learner an optional parameter can be passed (ext_outcomes_tool_placement_url) which will create a callback request on submission of a paper to Turnitin.  The callback contains the following JSON:
+For a learner an optional parameter can be passed `ext_outcomes_tool_placement_url` which will create a callback request on submission of a paper to Turnitin.  The callback contains the following information:
 
-* The LTI consumer provided lis_result_sourcedid
+* The LTI consumer provided `lis_result_sourcedid`
 * The Turnitin internal paper ID
-* The outcomes_tool_placement_url, a link which returns a JSON of the submission details (e.g. due date, resource title)
+* The `outcomes_tool_placement_url`, a link which returns a JSON of the submission details (e.g. due date, resource title)
 
 ## Outcome Grade Callback
 > Example Outcomes Grade Callback Response
@@ -220,22 +220,22 @@ For a learner an optional parameter can be passed (ext_outcomes_tool_placement_u
 <replaceResultRequest>
  <resultRecord>
     <sourcedGUID>
-      <sourcedId>{LMS_paper_id}</sourcedId>
+      <sourcedId>10000001</sourcedId>
     </sourcedGUID>
     <result>
       <resultScore>
         <language>en</language>
-        <textString>{score}</textString>
+        <textString>'85'</textString>
       </resultScore>
     </result>
   </resultRecord>
 </replaceResultRequest>
 ```
 
-On submission of a paper if the ext_outcomes_tool_placement_url was sent then when a grade is updated in the Turnitin Evaluation Viewer a callback will be sent back to that URL.  The callback contains the following XML:
+When a paper is submitted if the `lis_outcome_service_url` and `lis_result_sourcedid` was given then this URL will be stored with the paper.  When an instructor then changes the papers grade in the Evaluation Viewer a callback will be sent back to that URL.  The callback contains the following information:
 
 * The lis_result_sourcedid for the paper
-* The grade of the paper
+* The grade set for the paper
 
 
 ## Resource Callback
@@ -249,10 +249,10 @@ On submission of a paper if the ext_outcomes_tool_placement_url was sent then wh
 }
 ```
 
-On launching to create a new assignment an optional parameter (ext_resource_tool_placement_url) can be passed which will create a callback delivered on creation of a resource.  The callback contains the following JSON: 
+On launching to create a new assignment an optional parameter `ext_resource_tool_placement_url` can be passed which will create a callback delivered on creation of a resource.  The callback contains the following information: 
 
-* The LTI consumer provided resource_link_id
+* The LTI consumer provided `resource_link_id`
 * The Turnitin internal assignment ID
-* The resource_tool_placement_url, a link which returns a JSON of the resource details (e.g. paper grade, similarity score).
+* The `resource_tool_placement_url`, a link which returns a JSON of the resource details (e.g. paper grade, similarity score).
 
 ## Server-to-Server Submission
