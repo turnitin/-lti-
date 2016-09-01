@@ -162,6 +162,29 @@ context_title | ✗ | Used to create/update the class title.
 
 # Workflows
 
+## Membership Service
+
+> Example form using the memberships service
+
+```html
+<form action="https://api.turnitin.com/api/lti/1p0/assignment" method="post">
+  <input type="hidden" name="context_id" value="456434513"/>
+  ...
+  <input type="hidden" name="custom_link_memberships_url" value="http://ltiapps.net/test/tc-memberships.php/link/f7174aa227f12214020cf538d0ec3ae1/">
+  ...
+  <input type="submit" value="Press to continue to external tool"/>
+</form>
+```
+
+Turnitin's LTI Tool Provider supports the [IMS LTI Memberships Service 1.0](https://www.imsglobal.org/specs/ltimemv1p0). The membership service is a LTI compliant method of informing a Tool Provider of the memberships for a given context or resource. The Turnitin LTI Tool Provider uses this information to ensure our records of students on an assignment are in-sync with your LMS.
+
+To use the memberships service, you need to be using an LMS which supports the standard. You will also need to know the memberships URL endpoint for your LMS and ensure it's exposed to the public. When performing the LTI launch for your assignment, include this URL as the `custom_link_memberships_url` attribute in your form. When the assignment is launched, the Tool Provider will call back to your LMS and request an up-to-date membership list for the specified resource.
+
+#### References
+
+ - [https://www.imsglobal.org/specs/ltimemv1p0-intro](https://www.imsglobal.org/specs/ltimemv1p0-intro)
+ - [https://www.imsglobal.org/specs/ltimemv1p0](https://www.imsglobal.org/specs/ltimemv1p0)
+
 # Extensions
 
 ## Parameters
@@ -249,7 +272,7 @@ When a paper is submitted if the POST params `lis_outcome_service_url` and `lis_
 }
 ```
 
-On launching to create a new assignment an optional POST parameter can be passed `ext_resource_tool_placement_url` can be passed which will create a callback delivered on creation of a resource.  The callback contains the following information: 
+On launching to create a new assignment an optional POST parameter can be passed `ext_resource_tool_placement_url` can be passed which will create a callback delivered on creation of a resource.  The callback contains the following information:
 
 * The LTI consumer provided `resource_link_id`
 * The Turnitin internal assignment ID
